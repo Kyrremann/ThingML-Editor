@@ -1,3 +1,0 @@
-# ThingML-Editor Makefile v0.1
-run:
-	java -jar ./ThingMLDemo/dist/
