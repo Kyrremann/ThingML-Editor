@@ -1,0 +1,25 @@
+(StateMachine statemachine
+	(Init s1)
+	(Final s3)
+	(State s1
+		(Transition 
+			(Weight 2)
+			(Target s2))
+		(Transition 
+			(Weight 1)
+			(Target s3))
+	)
+	(State s2
+		(Transition 
+			(Weight 0)
+			(Target s2))
+		(Transition 
+			(Weight 5)
+			(Target s3))
+	)
+	(State s3
+		(Transition 
+			(Weight 10)
+			(Target s2))
+	)
+)
