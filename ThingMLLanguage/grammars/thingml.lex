@@ -20,7 +20,7 @@ import java_cup.runtime.*;
   
 %}
 LineTerminator          = \r|\n|\r\n
-WhiteSpace				= {LineTerminator} | [ \t\f]
+WhiteSpace		= {LineTerminator} | [ \t\f]
 Identifier              = [:jletter:] [:jletterdigit:]*
 EndOfLineComment        = "//" [^\r\n]* {LineTerminator}
 DecIntegerLiteral       = 0 | [1-9][0-9]*
@@ -40,9 +40,8 @@ DecIntegerLiteral       = 0 | [1-9][0-9]*
   /* operators */
   "->"                          	{ return symbol(sym.TRANS); }
 
-  
-  "{"			         			{ return symbol(sym.LBRACK); }
-  "}"								{ return symbol(sym.RBRACK); }
+  "{"			         	{ return symbol(sym.LBRACK); }
+  "}"					{ return symbol(sym.RBRACK); }
   "("                             	{ return symbol(sym.LPAR); }
   ")"                            	{ return symbol(sym.RPAR); }
 
@@ -50,6 +49,6 @@ DecIntegerLiteral       = 0 | [1-9][0-9]*
   {DecIntegerLiteral}             	{ return symbol(sym.INT_LITERAL, yytext()); }
 }
 
- /* error */
- .     		                 { throw new Error("Illegal character '" + yytext() + "' at line " + yyline + ", column " + yycolumn + "."); }
+  /* error */
+  .     		                { throw new Error("Illegal character '" + yytext() + "' at line " + yyline + ", column " + yycolumn + "."); }
   

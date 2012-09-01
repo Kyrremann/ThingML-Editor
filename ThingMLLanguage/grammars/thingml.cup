@@ -4,60 +4,60 @@ import syntaxtree.*;
 import java.util.*;
 
 parser code {:
-	
-	public int errorLine;
-	public int errorColumn;
-	public String errorValue;
 
-	public void syntax_error(Symbol cur_token) {
-		errorLine = cur_token.left;
-		errorColumn = cur_token.right;
-		errorValue = (String) cur_token.value;
-		
-		report_error("Syntax error at line " + (cur_token.left+1) +
-		", column " + cur_token.right + ". Problem is " + cur_token.value, null);
-	}
+       public int errorLine;
+       public int errorColumn;
+       public String errorValue;
+
+       public void syntax_error(Symbol cur_token) {
+       	       errorLine = cur_token.left;
+	       errorColumn = cur_token.right;
+	       errorValue = (String) cur_token.value;
+
+	       report_error("Syntax error at line " + (cur_token.left+1) +
+	       ", column " + cur_token.right + ". Problem is " + cur_token.value, null);
+       }
 :};
 
 /* Terminals */
-terminal 		            STATEMACHINE, STATE;
-terminal					INIT, FINAL;
-terminal 					LBRACK, RBRACK;
-terminal 					LPAR, RPAR;
+terminal 		    STATEMACHINE, STATE;
+terminal		    INIT, FINAL;
+terminal 		    LBRACK, RBRACK;
+terminal 		    LPAR, RPAR;
 terminal                    TRANS;
-terminal String				INT_LITERAL;
+terminal String		    INT_LITERAL;
 terminal String             ID;
 
 /* Non terminals */
 non terminal Program	    program;
-non terminal StateMachine	stateMachine;
-non terminal States			states;
-non terminal Transition		transition;
+non terminal StateMachine   stateMachine;
+non terminal States	    states;
+non terminal Transition	    transition;
 
 /* Precedence */
-precedence left				LPAR, RPAR;
+precedence left		    LPAR, RPAR;
 
 /* The grammar */
-program						::= stateMachine:sm
-							{: RESULT = new Program(sm); :}
-							;
-							
-stateMachine				::= STATEMACHINE:sm ID:name LBRACK states:s RBRACK
-							{: RESULT = new StateMachine(name, s); :}
-							;
+program			    ::= stateMachine:sm
+			    {: RESULT = new Program(sm); :}
+			    ;
 
-states						::= 
-							{: RESULT = null; :}
-							| INIT ID:name states:next
-							{: RESULT = new InitState(name, next); :}
-							| FINAL ID:name states:next
-							{: RESULT = new FinalState(name, next); :}
-							| STATE ID:name LBRACK transition:t RBRACK states:next
-							{: RESULT = new State(name, t, next); :}
-							;
-	
-transition					::= 
-							{: RESULT = null; :}
-							| TRANS LPAR INT_LITERAL:i RPAR ID:name transition:next
-							{: RESULT = new Transition(i, name, next); :}
-							;
+stateMachine		    ::= STATEMACHINE ID:name LBRACK states:s RBRACK
+			    {: RESULT = new StateMachine(name, s, nameright); :}
+			    ;
+
+states			    ::= 
+			    {: RESULT = null; :}
+			    | INIT ID:name states:next
+			    {: RESULT = new InitState(name, next, nameright); :}
+			    | FINAL ID:name states:next
+			    {: RESULT = new FinalState(name, next, nameright); :}
+			    | STATE ID:name LBRACK transition:t RBRACK states:next
+			    {: RESULT = new State(name, t, next, nameright); :}
+			    ;
+
+transition		    ::= 
+			    {: RESULT = null; :}
+			    | TRANS LPAR INT_LITERAL:i RPAR ID:name transition:next
+			    {: RESULT = new Transition(i, name, next, nameright, iright); :}
+			    ;

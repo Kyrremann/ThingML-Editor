@@ -39,17 +39,7 @@
   <!-- These properties control what languages get added to the built -->
   <!-- Simply remove the properties for languages you don't need.     -->
   <!-- You will have to modify LanguageSupportFactory.java though.    -->
-  <property name="c"                value="true"/>
-  <property name="groovy"           value="true"/>
-  <property name="html"             value="true"/>
-  <property name="java"             value="true"/>
-  <property name="js"               value="true"/>
-  <property name="jsp"              value="true"/>
-  <property name="perl"             value="true"/>
-  <property name="php"              value="true"/>
-  <property name="sh"               value="true"/>
   <property name="thingml"          value="true"/>
-  <property name="xml"              value="true"/>
 
   <!-- If this property is set, then the demos for all of  -->
   <!-- the supported languages will be added to the built  -->
@@ -82,25 +72,14 @@
       <classpath>
 	<pathelement     location="${rsta-jar}"/>
 	<pathelement     location="${autocomplete-jar}"/>
-	<pathelement     location="lib/rhino/js-14_Patch_716562.jar"/>
 	<pathelement	 location="lib/java-cup-11a.jar"/>
       </classpath>
       
-      <include                name="org/fife/rsta/ac/*"/>
-      <include                name="org/fife/rsta/ac/common/*"/>
+      <include                  name="org/fife/rsta/ac/*"/>
+      <include                  name="org/fife/rsta/ac/common/*"/>
 
-      <include if="c"         name="org/fife/rsta/ac/c/**"/>
-      <include if="groovy"    name="org/fife/rsta/ac/groovy/**"/>
-      <include if="html"      name="org/fife/rsta/ac/html/**"/>
-      <include if="java"      name="org/fife/rsta/ac/java/**"/>
-      <include if="js"        name="org/fife/rsta/ac/js/**"/>
-      <include if="jsp"       name="org/fife/rsta/ac/jsp/**"/>
-      <include if="perl"      name="org/fife/rsta/ac/perl/**"/>
-      <include if="php"       name="org/fife/rsta/ac/php/**"/>
-      <include if="sh"        name="org/fife/rsta/ac/sh/**"/>
       <include if="thingml"	name="org/fife/rsta/ac/thingml/**"/>
-      <include if="xml"       name="org/fife/rsta/ac/xml/**"/>
-      <include if="demo"      name="org/fife/rsta/ac/demo/**"/>
+      <include if="demo"        name="org/fife/rsta/ac/demo/**"/>
 
     </javac>
   </target>
@@ -115,26 +94,13 @@
     <jar destfile="${dist-dir}/language_support.jar">
       <fileset dir="${class-dir}"/>
       <fileset dir=".">
-	<include if="c"    name="data/c.xml"/>
-	<include if="html" name="data/html.xml"/>
-	<include if="jsp"  name="data/jsp.xml"/>
-	<include if="perl" name="data/perl5.xml"/>
-	<include if="php"  name="data/php.xml"/>
-	<include if="sh"   name="data/sh.xml"/>
+	<include if="thingml"   name="data/thingml.xml"/>
       </fileset>
       <fileset dir="src">
-	<include if="c"    name="org/fife/rsta/ac/c/**/*.png"/>
-	<include if="html" name="org/fife/rsta/ac/html/**/*.png"/>
-	<include if="java" name="org/fife/rsta/ac/java/**/*.gif"/>
-	<include if="js"   name="org/fife/rsta/ac/js/**/*.gif"/>
-	<include if="js"   name="org/fife/rsta/ac/js/*.txt"/>
-	<include if="xml"  name="org/fife/rsta/ac/xml/**/*.png"/>
+    	<include if="thingml"  name="org/fife/rsta/ac/thingml/**/*.png"/>
       </fileset>
-      <fileset dir="${source-dir}">
-	<include if="js" name="org/fife/rsta/ac/js/ecma/**/*.java"/>
-      </fileset>
-      <fileset dir="res">
-	<include if="demo" name="**"/>
+    <fileset dir="res">
+    	<include if="demo" name="**"/>
       </fileset>
       <manifest>
 	<attribute name="Main-Class" value="org.fife.rsta.ac.demo.DemoApp"/>
@@ -155,24 +121,6 @@
 	<include name="RSTALanguageSupport.License.txt"/>
 	<include name="readme.txt"/>
       </fileset>
-    </copy>
-    
-    <!-- Per-language dependencies. -->
-    <antcall target="possibleJavaScriptDependencies"/>
-
-  </target>
-
-
-  <!-- Adds all JavaScript dependencies to the distribution if JS is included. -->
-  <target name="possibleJavaScriptDependencies" if="js">
-    <copy todir="${dist-dir}">
-      <fileset dir="lib/rhino" includes="**"/>
-      <mapper>
-	<mapper type="glob" from="*.jar"       to="*.jar"/> 
-	<mapper type="glob" from="build-date"  to="Rhino.build-date"/>
-	<mapper type="glob" from="LICENSE.txt" to="Rhino.LICENSE.txt"/>
-	<mapper type="identity" from="rhino.rsta.readme.txt"/>
-      </mapper>
     </copy>
   </target>
 </project>

@@ -18,22 +18,19 @@ import java.util.Map;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
-
 /**
- * Provides language support (code completion, etc.) for programming
- * languages in RSyntaxTextArea.  Different languages may  have varying
- * levels of "support."
- *
+ * Provides language support (code completion, etc.) for programming languages
+ * in RSyntaxTextArea. Different languages may have varying levels of "support."
+ * 
  * @author Robert Futrell
  * @version 1.0
  */
 public class LanguageSupportFactory implements PropertyChangeListener {
 
-	private static LanguageSupportFactory INSTANCE =
-										new LanguageSupportFactory();
+	private static LanguageSupportFactory INSTANCE = new LanguageSupportFactory();
 
 	/**
-	 * Maps syntax styles to supports.  We cheat and initially map styles to
+	 * Maps syntax styles to supports. We cheat and initially map styles to
 	 * class-names-for-supports, and lazily create the actual
 	 * <code>LanguageSupports</code> when necessary.
 	 */
@@ -43,9 +40,7 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 	 * Client property set on RSyntaxTextAreas that points to the current
 	 * language support for that text area.
 	 */
-	private static final String LANGUAGE_SUPPORT_PROPERTY =
-									"org.fife.rsta.ac.LanguageSupport";
-
+	private static final String LANGUAGE_SUPPORT_PROPERTY = "org.fife.rsta.ac.LanguageSupport";
 
 	/**
 	 * Constructor.
@@ -54,20 +49,20 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 		createSupportMap();
 	}
 
-
 	/**
-	 * Adds language support for a language.  This is a hook for applications
+	 * Adds language support for a language. This is a hook for applications
 	 * using this library to add language support for custom languages.
-	 *
-	 * @param style The language to add support for.  This should be one of
-	 *        the values defined in {@link SyntaxConstants}.  Any previous
-	 *        language support for this language is removed. 
-	 * @param lsClassName The class name of the <code>LanguageSupport</code>.
+	 * 
+	 * @param style
+	 *            The language to add support for. This should be one of the
+	 *            values defined in {@link SyntaxConstants}. Any previous
+	 *            language support for this language is removed.
+	 * @param lsClassName
+	 *            The class name of the <code>LanguageSupport</code>.
 	 */
 	public void addLanguageSupport(String style, String lsClassName) {
-		styleToSupport.put(style,  lsClassName);
+		styleToSupport.put(style, lsClassName);
 	}
-
 
 	/**
 	 * Creates the mapping of syntax styles to language supports.
@@ -78,47 +73,25 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 
 		String prefix = "org.fife.rsta.ac.";
 
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_C,
-				prefix + "c.CLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_GROOVY,
-				prefix + "groovy.GroovyLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_HTML,
-				prefix + "html.HtmlLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_JAVA,
-				prefix + "java.JavaLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT,
-				prefix + "js.JavaScriptLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_JSP,
-				prefix + "jsp.JspLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_PERL,
-				prefix + "perl.PerlLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_PHP,
-				prefix + "php.PhpLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL,
-				prefix + "sh.ShellLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_THINGML, 
-				prefix + "thingml.ThingMLLanguageSupport");
-		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_XML,
-				prefix + "xml.XmlLanguageSupport");
-
+		addLanguageSupport(SyntaxConstants.SYNTAX_STYLE_THINGML, prefix
+				+ "thingml.ThingMLLanguageSupport");
 	}
-
 
 	/**
 	 * Returns the singleton instance of this class.
-	 *
+	 * 
 	 * @return The singleton instance.
 	 */
 	public static LanguageSupportFactory get() {
 		return INSTANCE;
 	}
 
-
 	/**
 	 * Returns the language support for a programming language.
-	 *
-	 * @param style The language.  This should be one of the constants defined
-	 *        in {@link SyntaxConstants}.
+	 * 
+	 * @param style
+	 *            The language. This should be one of the constants defined in
+	 *            {@link SyntaxConstants}.
 	 * @return The language support, or <code>null</code> if none is registered
 	 *         for the language specified.
 	 */
@@ -129,8 +102,8 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 		Object obj = styleToSupport.get(style);
 		if (obj instanceof String) {
 			try {
-				Class clazz = Class.forName((String)obj);
-				support = (LanguageSupport)clazz.newInstance();
+				Class clazz = Class.forName((String) obj);
+				support = (LanguageSupport) clazz.newInstance();
 			} catch (RuntimeException re) { // FindBugs
 				throw re;
 			} catch (Exception e) {
@@ -141,36 +114,36 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 			return support;
 		}
 
-		return (LanguageSupport)obj;
+		return (LanguageSupport) obj;
 
 	}
 
-
 	/**
 	 * Installs language support on an RSTA depending on its syntax style.
-	 *
-	 * @param textArea The text area to install language support on.
+	 * 
+	 * @param textArea
+	 *            The text area to install language support on.
 	 * @see #uninstallSupport(RSyntaxTextArea)
 	 */
 	private void installSupport(RSyntaxTextArea textArea) {
 		String style = textArea.getSyntaxEditingStyle();
 		LanguageSupport support = getSupportFor(style);
-		if (support!=null) {
+		if (support != null) {
 			support.install(textArea);
 		}
 		textArea.putClientProperty(LANGUAGE_SUPPORT_PROPERTY, support);
 	}
 
-
 	/**
 	 * Listens for RSyntaxTextAreas to change what language they're
 	 * highlighting, so language support can be updated appropriately.
-	 *
-	 * @param e The event.
+	 * 
+	 * @param e
+	 *            The event.
 	 */
 	public void propertyChange(PropertyChangeEvent e) {
 
-		RSyntaxTextArea source = (RSyntaxTextArea)e.getSource();
+		RSyntaxTextArea source = (RSyntaxTextArea) e.getSource();
 		String name = e.getPropertyName();
 		if (RSyntaxTextArea.SYNTAX_STYLE_PROPERTY.equals(name)) {
 			uninstallSupport(source);
@@ -179,14 +152,14 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 
 	}
 
-
 	/**
-	 * Registers an RSyntaxTextArea to receive language support.  The text area
+	 * Registers an RSyntaxTextArea to receive language support. The text area
 	 * will get support for the currently highlighted language, and if it
 	 * changes what language it is highlighting, the support will change as
 	 * appropriate.
-	 *
-	 * @param textArea The text area to register.
+	 * 
+	 * @param textArea
+	 *            The text area to register.
 	 */
 	public void register(RSyntaxTextArea textArea) {
 		installSupport(textArea);
@@ -194,27 +167,26 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 				RSyntaxTextArea.SYNTAX_STYLE_PROPERTY, this);
 	}
 
-
 	/**
 	 * Uninstalls the language support on an RSyntaxTextArea, if any.
-	 *
-	 * @param textArea The text area.
+	 * 
+	 * @param textArea
+	 *            The text area.
 	 * @see #installSupport(RSyntaxTextArea)
 	 */
 	private void uninstallSupport(RSyntaxTextArea textArea) {
-		LanguageSupport support = (LanguageSupport)textArea.getClientProperty(
-												LANGUAGE_SUPPORT_PROPERTY);
-		if (support!=null) {
+		LanguageSupport support = (LanguageSupport) textArea
+				.getClientProperty(LANGUAGE_SUPPORT_PROPERTY);
+		if (support != null) {
 			support.uninstall(textArea);
 		}
 	}
 
-
 	/**
-	 * Un-registers an RSyntaxTextArea.  This removes any language support
-	 * on it.
-	 *
-	 * @param textArea The text area.
+	 * Un-registers an RSyntaxTextArea. This removes any language support on it.
+	 * 
+	 * @param textArea
+	 *            The text area.
 	 * @see #register(RSyntaxTextArea)
 	 */
 	public void unregister(RSyntaxTextArea textArea) {
@@ -222,6 +194,5 @@ public class LanguageSupportFactory implements PropertyChangeListener {
 		textArea.removePropertyChangeListener(
 				RSyntaxTextArea.SYNTAX_STYLE_PROPERTY, this);
 	}
-
 
 }

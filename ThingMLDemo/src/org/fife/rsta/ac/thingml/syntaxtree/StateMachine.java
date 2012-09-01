@@ -31,4 +31,8 @@ public class StateMachine {
                 child.add(states.getTreeNode(child));
         return child;
 	}
+	
+	public String toString() {
+		return name + " - offset: " + offset;
+	}
 }
