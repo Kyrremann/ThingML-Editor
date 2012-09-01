@@ -1,5 +1,7 @@
 package org.fife.rsta.ac.thingml.syntaxtree;
 
+import javax.swing.ImageIcon;
+
 import org.fife.rsta.ac.thingml.tree.ThingMLTreeNode;
 
 public class InitState extends States {
@@ -24,6 +26,7 @@ public class InitState extends States {
 	public ThingMLTreeNode getTreeNode(ThingMLTreeNode root) {
 		ThingMLTreeNode child = new ThingMLTreeNode(name);
 		child.setOffset(this.offset);
+		child.setIcon(new ImageIcon(getClass().getResource("startstate.png")));
 		if(next != null)
 			root.add(next.getTreeNode(root));
 		return child;

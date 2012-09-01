@@ -19,7 +19,6 @@ public class ThingMLLanguageSupport extends AbstractLanguageSupport {
 		ThingMLParser mlParser = new ThingMLParser(this);
 		textArea.addParser(mlParser);
 		textArea.putClientProperty(PROPERTY_LANGUAGE_PARSER, mlParser);
-
 	}
 
 	public void uninstall(RSyntaxTextArea textArea) {

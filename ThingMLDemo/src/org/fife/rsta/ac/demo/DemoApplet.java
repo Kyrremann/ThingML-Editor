@@ -25,6 +25,8 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
  */
 public class DemoApplet extends JApplet {
 
+	private static final long serialVersionUID = 93765764419671649L;
+
 
 	/**
 	 * Initializes this applet.

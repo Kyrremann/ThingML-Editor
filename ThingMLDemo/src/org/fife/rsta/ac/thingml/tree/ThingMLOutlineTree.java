@@ -27,8 +27,8 @@ public class ThingMLOutlineTree extends AbstractSourceTree {
 	private DefaultTreeModel model;
 
 	public ThingMLOutlineTree() {
-		// setSorted(true);
-		setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 8));
+		// setSorted(false);
+		setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 8));
 		setRootVisible(false);
 		setCellRenderer(new ThingMLTreeCellRenderer());
 		model = new DefaultTreeModel(new DefaultMutableTreeNode("Nothing"));

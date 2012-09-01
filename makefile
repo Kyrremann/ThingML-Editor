@@ -1,11 +1,11 @@
 # ThingML-Editor Makefile v0.1
 all:
-	compile make-jar run
+	make jar run
 
 compile:
 	cd ./ThingMLDemo && ant compile
 
-make-jar:
+jar:
 	cd ./ThingMLDemo && ant make-jar
 
 run:

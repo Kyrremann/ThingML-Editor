@@ -1,5 +1,7 @@
 package org.fife.rsta.ac.thingml.syntaxtree;
 
+import javax.swing.ImageIcon;
+
 import org.fife.rsta.ac.thingml.tree.ThingMLTreeNode;
 
 public class Transition {
@@ -33,6 +35,7 @@ public class Transition {
 		ThingMLTreeNode child = new ThingMLTreeNode(name);
 		child.setOffset(this.offset);
 		child.weightOffset = weightOffset;
+		child.setIcon(new ImageIcon(getClass().getResource("transition.png")));
 		if (next != null)
 			root.add(next.getTreeNode(root));
 		return child;

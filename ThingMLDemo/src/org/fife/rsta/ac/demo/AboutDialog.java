@@ -20,7 +20,6 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -36,10 +35,6 @@ import javax.swing.UIManager;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 
-import org.fife.rsta.ac.java.buildpath.JarLibraryInfo;
-import org.fife.rsta.ac.java.buildpath.LibraryInfo;
-import org.fife.rsta.ac.perl.PerlLanguageSupport;
-
 
 /**
  * The "About" dialog for the demo application.
@@ -49,6 +44,7 @@ import org.fife.rsta.ac.perl.PerlLanguageSupport;
  */
 public class AboutDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final Border empty5Border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 
 
@@ -82,10 +78,7 @@ public class AboutDialog extends JDialog {
 		textArea.setFont(labelFont);
 		textArea.setText("Version 0.2\n\n" + 
 			"Demonstrates basic features of the RSTALanguageSupport library.\n" +
-			"Note that some features for some languages may not work unless your system " +
-			"is set up properly.\nFor example, Java code completion requries a JRE on " +
-			"your PATH, and Perl completion requires the Perl executable to be on your " +
-			"PATH.");
+			"Currently this version only use ThingML.");
 		textArea.setEditable(false);
 		textArea.setBackground(Color.white);
 		textArea.setLineWrap(true);
@@ -98,27 +91,27 @@ public class AboutDialog extends JDialog {
 
 		SpringLayout sl = new SpringLayout();
 		JPanel temp = new JPanel(sl);
-		JLabel perlLabel = new JLabel("Perl install location:");
-		File loc = PerlLanguageSupport.getDefaultPerlInstallLocation();
-		String text = loc==null ? null : loc.getAbsolutePath();
-		JTextField perlField = createTextField(text);
-		JLabel javaLabel = new JLabel("Java home:");
-		String jre = null;
-		LibraryInfo info = LibraryInfo.getMainJreJarInfo();
-		if (info!=null) { // Should always be true
-			File jarFile = ((JarLibraryInfo)info).getJarFile();
-			jre = jarFile.getParentFile().getParentFile().getAbsolutePath();
-		}
-		JTextField javaField = createTextField(jre);
-
-		if (getComponentOrientation().isLeftToRight()) {
-			temp.add(perlLabel);        temp.add(perlField);
-			temp.add(javaLabel);        temp.add(javaField);
-		}
-		else {
-			temp.add(perlField);        temp.add(perlLabel);
-			temp.add(javaField);        temp.add(javaLabel);
-		}
+//		JLabel perlLabel = new JLabel("Perl install location:");
+//		File loc = PerlLanguageSupport.getDefaultPerlInstallLocation();
+//		String text = loc==null ? null : loc.getAbsolutePath();
+//		JTextField perlField = createTextField(text);
+//		JLabel javaLabel = new JLabel("Java home:");
+//		String jre = null;
+//		LibraryInfo info = LibraryInfo.getMainJreJarInfo();
+//		if (info!=null) { // Should always be true
+//			File jarFile = ((JarLibraryInfo)info).getJarFile();
+//			jre = jarFile.getParentFile().getParentFile().getAbsolutePath();
+//		}
+//		JTextField javaField = createTextField(jre);
+//
+//		if (getComponentOrientation().isLeftToRight()) {
+//			temp.add(perlLabel);        temp.add(perlField);
+//			temp.add(javaLabel);        temp.add(javaField);
+//		}
+//		else {
+//			temp.add(perlField);        temp.add(perlLabel);
+//			temp.add(javaField);        temp.add(javaLabel);
+//		}
 		makeSpringCompactGrid(temp, 2, 2, 5,5, 15,5);
 		box.add(temp);
 
@@ -262,6 +255,11 @@ public class AboutDialog extends JDialog {
 	 * The border of the "top section" of the About dialog.
 	 */
 	private static class TopBorder extends AbstractBorder {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public Insets getBorderInsets(Component c) { 
 			return getBorderInsets(c, new Insets(0, 0, 0, 0));

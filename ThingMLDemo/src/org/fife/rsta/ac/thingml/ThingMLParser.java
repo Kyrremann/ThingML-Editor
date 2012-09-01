@@ -29,7 +29,7 @@ import java.io.InputStream;
  * Parses ThingML code in an <code>RSyntaxTextArea</code>.
  * <p>
  * 
- * Like all RSTA <code>Parser</code>s, an <code>XmlParser</code> instance is
+ * Like all RSTA <code>Parser</code>s, an <code>ThingMLParser</code> instance is
  * notified when the RSTA's text content changes. After a small delay, it will
  * parse the content as ThingML, building an AST and looking for any errors.
  * When parsing is complete, a property change event of type
@@ -68,9 +68,9 @@ public class ThingMLParser extends AbstractParser {
 	}
 
 	/**
-	 * Returns the XML model from the last time it was parsed.
+	 * Returns the ThingML model from the last time it was parsed.
 	 * 
-	 * @return The root node of the XML model, or <code>null</code> if it has
+	 * @return The root node of the ThingML model, or <code>null</code> if it has
 	 *         not yet been parsed or an error occurred while parsing.
 	 */
 	public ThingMLTreeNode getAst() {
