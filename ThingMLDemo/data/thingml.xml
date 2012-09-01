@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE api SYSTEM "CompletionXml.dtd">
+<api language="THINGML" >
+  <keywords>
+    <keyword name="StateMachine" definedIn="ThingML v1.0" type="StateMachine">
+      <desc>The state machine cover the whole program and is in the real ThingML called StateChart.</desc>
+    </keyword>
+    <keyword name="State" type="State">
+      <desc>States are a subsections inside a StateMachine which are used to communicate and execute commands.</desc>
+    </keyword>
+    <keyword name="init" type="State">
+        <desc>Init is used to choose which state is the start state.</desc>
+    </keyword>
+    <keyword name="final" type="State">
+        <desc>Final is the opposite of the init-state and let you choose which state(s) can be the finalizing state.</desc>
+    </keyword>
+    <keyword name="->" type="Transition">
+        <desc>Each state uses a transition to communicate and transfer data between them. Each transition are weighted.</desc>
+    </keyword>
+  </keywords>
+</api>

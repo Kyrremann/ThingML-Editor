@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE api SYSTEM "CompletionXml.dtd">
+<api language="THINGML" >
+
+    <keywords>
+
+        <keyword
+            name="StateMachine"
+            definedIn="ThingML v1.0"
+            type="State machine" >
+
+            <desc>
+Defines a Statechart.
+            </desc>
+        </keyword>
+
+        <keyword
+            name="State"
+            type="State" >
+
+            <desc>
+Defines a state inside a StateMachine
+            </desc>
+        </keyword>
+    </keywords>
+
+</api>
