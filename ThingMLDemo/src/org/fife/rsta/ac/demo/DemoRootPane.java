@@ -10,6 +10,8 @@
  */
 package org.fife.rsta.ac.demo;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +24,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.*;
+import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.TextAction;
 import javax.swing.tree.TreeNode;
 
@@ -60,6 +64,7 @@ class DemoRootPane extends JRootPane implements HyperlinkListener,
 	private RTextScrollPane scrollPane;
 	private RSyntaxTextArea textArea;
 	private AutoCompletion autoCompletion;
+	private JLabel statusLabel, cursorLabel;
 
 	private JCheckBoxMenuItem cellRenderingItem;
 	private JCheckBoxMenuItem showDescWindowItem;
@@ -100,19 +105,40 @@ class DemoRootPane extends JRootPane implements HyperlinkListener,
 		JTree dummy = new JTree((TreeNode) null);
 		treeSP = new JScrollPane(dummy);
 
-		// JPanel cp = new JPanel(new BorderLayout());
-		final JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeSP,
-				scrollPane);
+		final JSplitPane mainSplitPane = new JSplitPane(
+				JSplitPane.HORIZONTAL_SPLIT, treeSP, scrollPane);
 		SwingUtilities.invokeLater(new Runnable() {
-			   public void run() {
-			      sp.setDividerLocation(150);
-			   }
-			});
-		sp.setContinuousLayout(true);
-		setContentPane(sp);
+			public void run() {
+				mainSplitPane.setDividerLocation(150);
+			}
+		});
+		mainSplitPane.setContinuousLayout(true);
+
+		contentPane.setLayout(new BorderLayout());
+		contentPane.add(mainSplitPane, BorderLayout.CENTER);
+
+		contentPane.add(createToolBar(), BorderLayout.NORTH);
+		contentPane.add(createStatusPanel(), BorderLayout.SOUTH);
 		setJMenuBar(createMenuBar());
+		
 
 		refreshSourceTree();
+	}
+	
+	private JPanel createStatusPanel() {
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		statusPanel.setPreferredSize(new Dimension(this.getWidth(), 16));
+		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+
+		cursorLabel = new JLabel("Line: 0 - Char: 0");
+		cursorLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		statusPanel.add(cursorLabel);
+		statusLabel = new JLabel("");
+		statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		statusPanel.add(statusLabel);
+		
+		return statusPanel;
 	}
 
 	private JMenuBar createMenuBar() {
@@ -121,9 +147,9 @@ class DemoRootPane extends JRootPane implements HyperlinkListener,
 		ButtonGroup bg = new ButtonGroup();
 
 		JMenu menu = new JMenu("File");
-		menu.add(new JMenuItem(new NewFileAction(this)));
-		menu.add(new JMenuItem(new OpenAction(this)));
-		menu.add(new JMenuItem(new SaveAction(this)));
+		menu.add(new JMenuItem(new NewFileAction(this, null)));
+		menu.add(new JMenuItem(new OpenAction(this, null)));
+		menu.add(new JMenuItem(new SaveAction(this, null)));
 		menu.addSeparator();
 		menu.add(new JMenuItem(new TextAction("New window") {
 
@@ -167,6 +193,38 @@ class DemoRootPane extends JRootPane implements HyperlinkListener,
 
 		return mb;
 
+	}
+
+	private JToolBar createToolBar() {
+		JToolBar toolbar = new JToolBar("Toolbar", JToolBar.HORIZONTAL);
+
+		JButton button = new JButton();
+		button.setAction(new NewFileAction(this, new ImageIcon(getClass().getClassLoader().getResource("images/new.png"))));
+		toolbar.add(button);
+		button = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/open.png")));
+		button.setAction(new OpenAction(this, new ImageIcon(getClass().getClassLoader().getResource("images/open.png"))));
+		toolbar.add(button);
+		button = new JButton();
+		button.setAction(new SaveAction(this, new ImageIcon(getClass().getClassLoader().getResource("images/save.png"))));
+		toolbar.add(button);
+		toolbar.addSeparator();
+		button = new JButton();
+		button.setAction(new DefaultEditorKit.CutAction());
+		button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/cut.png")));
+		button.setText("");
+		toolbar.add(button);
+		button = new JButton();
+		button.setAction(new DefaultEditorKit.CopyAction());
+		button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/copy.png")));
+		button.setText("");
+		toolbar.add(button);
+		button = new JButton();
+		button.setAction(new DefaultEditorKit.PasteAction());
+		button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/paste.png")));
+		button.setText("");
+		toolbar.add(button);
+		
+		return toolbar;
 	}
 
 	/**

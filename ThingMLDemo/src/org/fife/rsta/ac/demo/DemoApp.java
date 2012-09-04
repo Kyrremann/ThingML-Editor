@@ -10,8 +10,11 @@
  */
 package org.fife.rsta.ac.demo;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
@@ -26,9 +29,10 @@ public class DemoApp extends JFrame {
 	private static final long serialVersionUID = -3237525402614050486L;
 
 	public DemoApp() {
-		setRootPane(new DemoRootPane());
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("RSTA Language Support ThingML Demo Application");
+		setTitle("RSTA Language Support ThingML Demo Application");		
+		setRootPane(new DemoRootPane());
 
 //		GraphicsEnvironment env = GraphicsEnvironment
 //				.getLocalGraphicsEnvironment();

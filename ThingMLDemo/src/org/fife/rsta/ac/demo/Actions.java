@@ -13,6 +13,7 @@ package org.fife.rsta.ac.demo;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -77,9 +78,11 @@ interface Actions {
 		private DemoRootPane demo;
 		private JFileChooser chooser;
 
-		public OpenAction(DemoRootPane demo) {
+		public OpenAction(DemoRootPane demo, ImageIcon icon) {
+			super(null, icon);
 			this.demo = demo;
-			putValue(NAME, "Open...");
+			if (icon == null)
+				putValue(NAME, "Open...");
 			putValue(MNEMONIC_KEY, new Integer('O'));
 			int mods = demo.getToolkit().getMenuShortcutKeyMask();
 			KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_O, mods);
@@ -90,7 +93,7 @@ interface Actions {
 			if (chooser == null) {
 				chooser = new JFileChooser();
 				chooser.setFileFilter(new ExtensionFileFilter(
-						"Java Source Files", "java"));
+						"ThingML Source Files", "thingml"));
 			}
 			int rc = chooser.showOpenDialog(demo);
 			if (rc == JFileChooser.APPROVE_OPTION) {
@@ -110,9 +113,11 @@ interface Actions {
 		private DemoRootPane demo;
 		private JFileChooser chooser;
 
-		public NewFileAction(DemoRootPane demo) {
+		public NewFileAction(DemoRootPane demo, ImageIcon icon) {
+			super(null, icon);
 			this.demo = demo;
-			putValue(NAME, "New...");
+			if (icon == null)
+				putValue(NAME, "New...");
 			putValue(MNEMONIC_KEY, new Integer('N'));
 			int mods = demo.getToolkit().getMenuShortcutKeyMask();
 			KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_N, mods);
@@ -143,9 +148,11 @@ interface Actions {
 		private DemoRootPane demo;
 		private JFileChooser chooser;
 
-		public SaveAction(DemoRootPane demo) {
+		public SaveAction(DemoRootPane demo, ImageIcon icon) {
+			super(null, icon);
 			this.demo = demo;
-			putValue(NAME, "Save...");
+			if (icon == null)
+				putValue(NAME, "Save...");
 			putValue(MNEMONIC_KEY, new Integer('S'));
 			int mods = demo.getToolkit().getMenuShortcutKeyMask();
 			KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_S, mods);
@@ -161,15 +168,15 @@ interface Actions {
 
 			int rc = chooser.showSaveDialog(demo);
 			// TODO: Fix this
-//			if (rc == JFileChooser.APPROVE_OPTION) {
-//				String name = chooser.getName(chooser.get);
-//				System.out.println(name);
-//				if (!name.endsWith(".thingml")) {
-//					name.concat(".thingml");
-//					chooser.setName(name)e(name);
-//				}
-//				demo.saveFile(chooser.getSelectedFile());
-//			}
+			// if (rc == JFileChooser.APPROVE_OPTION) {
+			// String name = chooser.getName(chooser.get);
+			// System.out.println(name);
+			// if (!name.endsWith(".thingml")) {
+			// name.concat(".thingml");
+			// chooser.setName(name)e(name);
+			// }
+			// demo.saveFile(chooser.getSelectedFile());
+			// }
 		}
 
 	}

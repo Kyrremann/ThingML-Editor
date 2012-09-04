@@ -97,7 +97,7 @@
 	<include if="thingml"   name="data/thingml.xml"/>
       </fileset>
       <fileset dir="src">
-    	<include if="thingml"  name="org/fife/rsta/ac/thingml/**/*.png"/>
+    	<include if="thingml" name="org/fife/rsta/ac/thingml/**/*.png"/>
       </fileset>
     <fileset dir="res">
     	<include if="demo" name="**"/>

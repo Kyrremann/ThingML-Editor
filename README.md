@@ -19,3 +19,5 @@ TODO
 - Generate Eclipse ML data, for making it compatible with the old compiler.
 - Allow the user to click on imports and then open the file that the user import.
 - Write documentation for the language.
+- Reverse the code list tree.
+- A line that show where the 80th char is.
