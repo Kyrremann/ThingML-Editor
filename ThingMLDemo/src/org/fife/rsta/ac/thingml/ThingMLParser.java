@@ -25,6 +25,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
+
 /**
  * Parses ThingML code in an <code>RSyntaxTextArea</code>.
  * <p>
@@ -53,6 +55,7 @@ public class ThingMLParser extends AbstractParser {
 
 	private PropertyChangeSupport support;
 	private ThingMLTreeNode root;
+	private List lineOffset;
 
 	ThingMLParser(ThingMLLanguageSupport tls) {
 		this.support = new PropertyChangeSupport(this);
@@ -70,8 +73,8 @@ public class ThingMLParser extends AbstractParser {
 	/**
 	 * Returns the ThingML model from the last time it was parsed.
 	 * 
-	 * @return The root node of the ThingML model, or <code>null</code> if it has
-	 *         not yet been parsed or an error occurred while parsing.
+	 * @return The root node of the ThingML model, or <code>null</code> if it
+	 *         has not yet been parsed or an error occurred while parsing.
 	 */
 	public ThingMLTreeNode getAst() {
 		return root;
@@ -86,12 +89,13 @@ public class ThingMLParser extends AbstractParser {
 		Program program;
 		InputStream inputStream = null;
 		long start = 0;
-		
+
 		try {
 			inputStream = new ByteArrayInputStream(document.getText(0,
 					document.getLength()).getBytes());
 			start = System.currentTimeMillis();
 			Lexer lexer = new Lexer(inputStream);
+			lineOffset = lexer.getLineOffset();
 			parser = new parser(lexer);
 			program = (Program) parser.parse().value;
 			long time = System.currentTimeMillis() - start;
@@ -99,7 +103,8 @@ public class ThingMLParser extends AbstractParser {
 			root = program.createAst();
 		} catch (Exception e) {
 			DefaultParserNotice notice = new DefaultParserNotice(this,
-					parser.errorValue, parser.errorLine, parser.errorColumn,
+					parser.errorValue, parser.errorLine,
+					getLineOffset(parser.errorLine) + parser.errorColumn + parser.errorLine,
 					parser.errorValue.length());
 			notice.setLevel(ParserNotice.ERROR);
 			result.addNotice(notice);
@@ -109,6 +114,12 @@ public class ThingMLParser extends AbstractParser {
 
 		support.firePropertyChange(PROPERTY_AST, null, root);
 		return result;
+	}
+
+	private int getLineOffset(int line) {
+		if (line < 1)
+			return 0;
+		return ((Integer) lineOffset.get(line - 1)).intValue();
 	}
 
 }

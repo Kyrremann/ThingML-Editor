@@ -1,4 +1,5 @@
 package thingmlparser;
+
 import java_cup.runtime.*;
 import syntaxtree.*;
 import java.util.*;
@@ -42,13 +43,13 @@ program			    ::= stateMachine:sm
 			    {: RESULT = new Program(sm); :}
 			    ;
 
-stateMachine		    ::= STATEMACHINE ID:name LBRACK states:s RBRACK
+stateMachine		    ::= STATEMACHINE ID:name LBRACK states:s RBRACK:test
 			    {: RESULT = new StateMachine(name, s, nameright); :}
 			    ;
 
 states			    ::= 
 			    {: RESULT = null; :}
-			    | INIT ID:name states:next
+			    | INIT:test ID:name states:next
 			    {: RESULT = new InitState(name, next, nameright); :}
 			    | FINAL ID:name states:next
 			    {: RESULT = new FinalState(name, next, nameright); :}

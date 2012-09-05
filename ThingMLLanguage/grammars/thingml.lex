@@ -1,5 +1,6 @@
 package thingmlparser;
 import java_cup.runtime.*;
+import java.util.ArrayList;
 %%
 
 %class Lexer
@@ -10,6 +11,7 @@ import java_cup.runtime.*;
 %public
 %{
   StringBuffer string = new StringBuffer();
+  ArrayList<Integer> lineOffset = new ArrayList<Integer>();
   
   private Symbol symbol(int type) {
     return new Symbol(type, yyline, yycolumn);
@@ -20,7 +22,8 @@ import java_cup.runtime.*;
   
 %}
 LineTerminator          = \r|\n|\r\n
-WhiteSpace		= {LineTerminator} | [ \t\f]
+  //WhiteSpace		= {LineTerminator} | [ \t\f]
+WhiteSpace              = [ \t\f]
 Identifier              = [:jletter:] [:jletterdigit:]*
 EndOfLineComment        = "//" [^\r\n]* {LineTerminator}
 DecIntegerLiteral       = 0 | [1-9][0-9]*
@@ -30,6 +33,7 @@ DecIntegerLiteral       = 0 | [1-9][0-9]*
 %%
     
 <YYINITIAL>{
+  {LineTerminator}                      { lineOffset.add(yyline, yycolumn); } 
   {WhiteSpace}                    	{}
   {EndOfLineComment}              	{}
   "StateMachine"                  	{ return symbol(sym.STATEMACHINE); }
