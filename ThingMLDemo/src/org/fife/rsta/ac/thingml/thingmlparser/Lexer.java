@@ -741,7 +741,6 @@ public class Lexer implements java_cup.runtime.Scanner {
         	  if (yyline != 0)
         		  current += ((Integer) lineOffset.get(yyline - 1)).intValue();
         	  lineOffset.add(yyline, new Integer(current));
-        	  System.out.println("Line(" + yyline + "):" + lineOffset.get(yyline));
           }
         case 23: break;
         case 14: 

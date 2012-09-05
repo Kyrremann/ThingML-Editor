@@ -104,7 +104,7 @@ public class ThingMLParser extends AbstractParser {
 		} catch (Exception e) {
 			DefaultParserNotice notice = new DefaultParserNotice(this,
 					parser.errorValue, parser.errorLine,
-					getLineOffset(parser.errorLine) + parser.errorColumn + parser.errorLine,
+					getLineOffset(parser.errorLine) + parser.errorColumn, // + parser.errorLine,
 					parser.errorValue.length());
 			notice.setLevel(ParserNotice.ERROR);
 			result.addNotice(notice);
@@ -116,10 +116,10 @@ public class ThingMLParser extends AbstractParser {
 		return result;
 	}
 
-	private int getLineOffset(int line) {
+	public int getLineOffset(int line) {
 		if (line < 1)
 			return 0;
-		return ((Integer) lineOffset.get(line - 1)).intValue();
+		return ((Integer) lineOffset.get(line - 1)).intValue() + line;
 	}
 
 }

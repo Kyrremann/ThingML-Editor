@@ -55,12 +55,14 @@ public class ThingMLOutlineTree extends AbstractSourceTree {
 	}
 
 	private void gotoElementAtPath(TreePath path) {
-		Object node = path.getLastPathComponent();
-		if (node instanceof ThingMLTreeNode) {
-			ThingMLTreeNode tmln = (ThingMLTreeNode) node;
-			int len = tmln.getLength();
+		Object lastNode = path.getLastPathComponent();
+		if (lastNode instanceof ThingMLTreeNode) {
+			ThingMLTreeNode node = (ThingMLTreeNode) lastNode;
+			int len = node.getLength();
 			if (len > -1) { // Should always be true
-				int offs = tmln.getOffset();
+				int offs = node.getOffset();
+				int line = node.getLine();
+				offs += parser.getLineOffset(line); // + line;
 				textArea.select(offs, offs + len);
 			}
 		}

@@ -9,11 +9,13 @@ public class InitState extends States {
 	String name;
 	States next;
 	int offset;
+	int line;
 
-	public InitState(String name, States next, int offset) {
+	public InitState(String name, States next, int offset, int line) {
 		this.name = name;
 		this.next = next;
 		this.offset = offset;
+		this.line = line;
 	}
 
 	public String printAst() {
@@ -26,6 +28,7 @@ public class InitState extends States {
 	public ThingMLTreeNode getTreeNode(ThingMLTreeNode root) {
 		ThingMLTreeNode child = new ThingMLTreeNode(name);
 		child.setOffset(this.offset);
+		child.setLine(line);
 		child.setIcon(new ImageIcon(getClass().getResource("startstate.png")));
 		if(next != null)
 			root.add(next.getTreeNode(root));

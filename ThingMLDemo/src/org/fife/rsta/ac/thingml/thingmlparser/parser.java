@@ -160,7 +160,7 @@ class CUP$parser$actions {
 		int nextleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int nextright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Transition next = (Transition)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new Transition(i, name, next, nameright, iright); 
+		 RESULT = new Transition(i, name, next, nameright, iright, nameleft); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("transition",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -187,7 +187,7 @@ class CUP$parser$actions {
 		int nextleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int nextright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		States next = (States)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new State(name, t, next, nameright); 
+		 RESULT = new State(name, t, next, nameright, nameleft); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("states",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -202,7 +202,7 @@ class CUP$parser$actions {
 		int nextleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int nextright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		States next = (States)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new FinalState(name, next, nameright); 
+		 RESULT = new FinalState(name, next, nameright, nameleft); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("states",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -220,7 +220,7 @@ class CUP$parser$actions {
 		int nextleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int nextright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		States next = (States)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new InitState(name, next, nameright); 
+		 RESULT = new InitState(name, next, nameright, nameleft); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("states",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -247,7 +247,7 @@ class CUP$parser$actions {
 		int testleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int testright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object test = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new StateMachine(name, s, nameright); 
+		 RESULT = new StateMachine(name, s, nameright, nameleft); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("stateMachine",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

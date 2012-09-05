@@ -10,6 +10,7 @@ public class ThingMLTreeNode extends SourceTreeNode {
 	private String name;
 	private Icon icon;
 	private int offset;
+	private int line;
     /**
      * only to be used if you ever need to know where the weight is place...
      */
@@ -34,6 +35,14 @@ public class ThingMLTreeNode extends SourceTreeNode {
 	
 	public int getOffset() {
 		return offset;
+	}
+	
+	public int getLine() {
+		return line;
+	}
+	
+	public void setLine(int line) {
+		this.line = line;
 	}
 
 	public void setOffset(int offset) {

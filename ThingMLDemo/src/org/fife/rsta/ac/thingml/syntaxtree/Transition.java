@@ -11,14 +11,16 @@ public class Transition {
 	Transition next;
 	int offset;
 	int weightOffset;
+	int line;
 
 	public Transition(String weight, String name, Transition next, int offset,
-			int weightOffset) {
+			int weightOffset, int line) {
 		this.name = name;
 		this.weight = weight;
 		this.next = next;
 		this.offset = offset;
 		this.weightOffset = weightOffset;
+		this.line = line;
 	}
 
 	public String printAst() {
@@ -35,6 +37,7 @@ public class Transition {
 		ThingMLTreeNode child = new ThingMLTreeNode(name);
 		child.setOffset(this.offset);
 		child.weightOffset = weightOffset;
+		child.setLine(line);
 		child.setIcon(new ImageIcon(getClass().getResource("transition.png")));
 		if (next != null)
 			root.add(next.getTreeNode(root));

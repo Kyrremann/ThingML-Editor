@@ -9,11 +9,13 @@ public class StateMachine {
 	String name;
 	States states;
 	int offset;
+	int line;
 
-	public StateMachine(String name, States states, int offset) {
+	public StateMachine(String name, States states, int offset, int line) {
 		this.name = name;
 		this.states = states;
 		this.offset = offset;
+		this.line = line;
 	}
 
 	public String printAst() {
@@ -27,6 +29,7 @@ public class StateMachine {
 	public MutableTreeNode getTreeNode(ThingMLTreeNode root) {
 		ThingMLTreeNode child = new ThingMLTreeNode(name);
 		child.setOffset(offset);
+		child.setLine(line);
         if(states != null)
                 child.add(states.getTreeNode(child));
         return child;
